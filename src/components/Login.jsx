@@ -1,8 +1,42 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
+
+import userData from '../utils/userData.json';
+
+const loginState = {
+  email: "",
+  password: "",
+};
+
 const LoginComp = ({ setView }) => {
+  const history = useHistory();
+
+  const [loginForm, setLoginForm] = useState(loginState);
+
+  const handleChange = (evt) => {
+    const { name, value } = evt.target;
+    setLoginForm({
+      ...loginForm,
+      [name]: value,
+    });
+  };
+
+  const onLogIn = (evt) => {
+    evt.preventDefault();
+
+    if (loginForm.email === "" || loginForm.password === "") {
+      alert("Please enter your details to continue!");
+    } else if (loginForm.email !== userData[0].email) {
+      alert("Incorrect email! Try again");
+    } else if (loginForm.password !== userData[0].password) {
+      alert("Incorrect password! Try again");
+    } else {
+      history.push("/dashboard");
+    }
+  };
+
   return (
     <Wrapper className="">
       <div className="content">
@@ -10,27 +44,39 @@ const LoginComp = ({ setView }) => {
           <div className="intro">
             <h5 className="font-weight-bold">Welcome Back</h5>
             <p className="font-smaller text-muted m-0">
-              SIgn in to your account by filling the form bellow.
+              Sign in to your account by filling the form below.
             </p>
           </div>
           <form className="mt-3">
             <div className="form-group">
               <label>Email</label>
-              <input type="email" className="form-control" />
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                value={loginForm.email}
+                onChange={handleChange}
+              />
             </div>
 
             <div className="form-group">
               <label>Password</label>
-              <input type="password" className="form-control" />
+              <input
+                type="password"
+                className="form-control"
+                name="password"
+                value={loginForm.password}
+                onChange={handleChange}
+              />
             </div>
 
             <div className="mt-5">
-              <NavLink
-                to="/dashboard"
+              <button
+                onClick={onLogIn}
                 className="btn btn-block text-center btn-primary"
               >
                 SIGN IN
-              </NavLink>
+              </button>
             </div>
             <p className="mt-3  text-center">
               Don't have an account yet ?{" "}
@@ -65,7 +111,6 @@ export default LoginComp;
 const Wrapper = styled.div`
   height: inherit;
   .content {
- 
     height: 100%;
     display: flex;
     justify-content: center;
@@ -75,8 +120,7 @@ const Wrapper = styled.div`
       max-width: 500px;
       background-color: #fff;
       padding: 2rem;
-        line-height: 1.625rem;
-      }
+      line-height: 1.625rem;
     }
   }
 `;
