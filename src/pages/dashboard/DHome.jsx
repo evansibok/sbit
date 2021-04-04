@@ -1,23 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const DHomePage = () => {
+  const [startDate, setStartDate] = useState(new Date());
+
   const openModal = () => {
     const overlay = document.querySelector(".th-modal-overlay");
     overlay.classList.add("show");
   };
+
+  const onDateChange = (date) => {
+    setStartDate(date);
+    console.log('date', date)
+  }
+
+
   return (
     <Wrapper className="">
       <p className="my-3 text-primary">Hello, Benjamin</p>
-      <div className="card home-card">
-        <h3>
-          <span className="text-primary">SBITS ToDo</span> helps you <br />{" "}
-          schedule your tasks.
-        </h3>
 
-        <p>
-          Your task schedule is empty, click the Plus to add your first Task
-        </p>
+      <div className="pick-date">
+        <DatePicker
+          selected={startDate}
+          onChange={(date) => onDateChange(date)}
+          inline
+          className="calendar"
+        />
       </div>
 
       <img
@@ -49,5 +60,11 @@ const Wrapper = styled.div`
     h3 {
       font-size: 2rem;
     }
+  }
+
+  .pick-date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;

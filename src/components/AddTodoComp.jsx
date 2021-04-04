@@ -93,18 +93,17 @@ textarea{
     justify-content:center;
     .th-close {
       background: gray;
-        width: 2rem;
-        height: 2rem;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 100%;
-        position: absolute;
-        right: 0;
-        top: -1.5rem;
-        right: -1.5rem;
-      }
+      width: 2rem;
+      height: 2rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 100%;
+      position: absolute;
+      right: 0;
+      top: -1.5rem;
+      right: -1.5rem;
     }
   }
 `;
