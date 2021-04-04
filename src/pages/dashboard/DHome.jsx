@@ -8,10 +8,10 @@ const DHomePage = () => {
   };
   return (
     <Wrapper className="">
-      <p className="my-3 text-primary">Hello, Kenneth</p>
+      <p className="my-3 text-primary">Hello, Benjamin</p>
       <div className="card home-card">
         <h3>
-          <span className="text-primary">Saathi ToDo</span> helps you <br />{" "}
+          <span className="text-primary">SBITS ToDo</span> helps you <br />{" "}
           schedule your tasks.
         </h3>
 
