@@ -39,6 +39,9 @@ const TaskListModal = (props) => {
         className={className}
         external={externalCloseBtn}
       >
+         {/* {
+           console.log("data--")
+         } */}
         <ModalHeader>{readableDate}</ModalHeader>
         <ModalBody>
           <Wrapper>

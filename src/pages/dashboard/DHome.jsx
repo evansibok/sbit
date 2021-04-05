@@ -7,6 +7,7 @@ import TASKS from "../../utils/tasks.json";
 import PromptModal from "./AddTodo/PromptModal";
 import AddTodoModal from "./AddTodo/AddTodoModal";
 import TaskListModal from './TaskList/TaskListModal';
+import moment from 'moment';
 
 // import TodosPage from './TaskList/TodosPage';
 
@@ -14,7 +15,7 @@ const DHomePage = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [pModal, setPModal] = useState(false);
   const [addTodosModal, setAddTodosModal] = useState(false);
-  const [taskListModal, setTaskListModal] = useState(true);
+  const [taskListModal, setTaskListModal] = useState(false);
 
   const togglePModal = () => setPModal(!pModal);
   const toggleAddTodosModal = () => setAddTodosModal(!addTodosModal);
@@ -26,28 +27,64 @@ const DHomePage = () => {
   // };
 
   const onDateChange = (changedDate) => {
-    setStartDate(changedDate);
+   
+       const newDATE = new Date()
+       console.log("check my new data------->",changedDate ,newDATE)
+       if(changedDate.toDateString() == newDATE.toDateString()){
+            console.log("yes it work")
+            setStartDate(changedDate);
 
-    const filteredTasks = TASKS.filter(
-      (task) =>
-        task.start_time.substring(0, 10) ===
-          changedDate.toISOString().substring(0, 10) ||
-        task.end_time.substring(0, 10) ===
-          changedDate.toISOString().substring(0, 10)
-    );
-    console.log("filteredTasks", filteredTasks);
+              const filteredTasks = TASKS.filter(
+                (task) =>
+                  task.start_time.substring(0, 10) ===
+                    changedDate.toISOString().substring(0, 10) ||
+                  task.end_time.substring(0, 10) ===
+                    changedDate.toISOString().substring(0, 10)
+              );
+              console.log("filteredTasks", filteredTasks);
 
-    if (filteredTasks.length === 0) {
-      setPModal(true);
-    } else {
-      setTaskListModal(true)
-      console.log("filtered task is not empty");
-    }
+              if (filteredTasks.length === 0) {
+                setPModal(true);
+              } else {
+                setTaskListModal(true)
+                console.log("filtered task is not empty");
+            }
+           }else{
+        console.log("not it work")
+        if (changedDate < newDATE   ) {
+          console.log("Selected date is in the past");
+            } else {
+              
+              setStartDate(changedDate);
 
-    // From Calendar (new Date())
-    // convert .toISOString() before sending to the backend
+              const filteredTasks = TASKS.filter(
+                (task) =>
+                  task.start_time.substring(0, 10) ===
+                    changedDate.toISOString().substring(0, 10) ||
+                  task.end_time.substring(0, 10) ===
+                    changedDate.toISOString().substring(0, 10)
+              );
+              console.log("filteredTasks", filteredTasks);
+
+              if (filteredTasks.length === 0) {
+                setPModal(true);
+              } else {
+                setTaskListModal(true)
+                console.log("filtered task is not empty");
+              }
+            console.log("Selected date is NOT in the past");
+          }
+       }
+
   };
 
+
+//   const yesterday = moment().subtract(1, 'day');
+//    const disablePastDt = current => {
+//     console.log("data---current------>", disablePastDt)
+//   return current.isAfter(yesterday);
+  
+// };
   // from the backend (ISO String)
   // console.log("first start time", TASKS[0].start_time);
   // convert to new Date()
@@ -57,6 +94,7 @@ const DHomePage = () => {
 
   return (
     <Wrapper className="">
+    
       <p className="my-3 text-primary">Hello, Benjamin</p>
       <p className="my-3 text-dark font-weight-bold d-flex align-items-center justify-content-center">
         Select a Date from the Calendar to view or add a task
@@ -66,6 +104,7 @@ const DHomePage = () => {
         <DatePicker
           selected={startDate}
           onChange={(date) => onDateChange(date)}
+          // isValidDate={disablePastDt}
           inline
         />
       </div>

@@ -13,7 +13,7 @@ const todoState = {
 };
 
 const AddTodoModal = (props) => {
-  const { buttonLabel, className, startDate, modal, toggle, setPModal } = props;
+  const { buttonLabel, className, startDate, modal, toggle, setPModal  } = props;
 
   const [todoForm, setTodoForm] = useState(todoState);
   const [endDate, setEndDate] = useState(new Date());

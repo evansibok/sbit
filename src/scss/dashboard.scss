@@ -41,3 +41,11 @@
     }
   }
 }
+
+.todo-item input{
+ display: block;
+ background-color: red;
+ 
+//  visibility:initial
+ z-index: 100;
+}
