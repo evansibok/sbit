@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,9 +9,16 @@ import PromptModal from "./AddTodo/PromptModal";
 import AddTodoModal from "./AddTodo/AddTodoModal";
 import TaskListModal from './TaskList/TaskListModal';
 
+import actions from '../../redux/actions';
+
 // import TodosPage from './TaskList/TodosPage';
 
 const DHomePage = () => {
+  const { getAllTodos } = actions;
+  const dispatch = useDispatch();
+  const state = useSelector(state => state.todos);
+  const todos = state.todos;
+
   const [startDate, setStartDate] = useState(new Date());
   const [pModal, setPModal] = useState(false);
   const [addTodosModal, setAddTodosModal] = useState(false);
@@ -20,15 +28,14 @@ const DHomePage = () => {
   const toggleAddTodosModal = () => setAddTodosModal(!addTodosModal);
   const toggleTaskListModal = () => setTaskListModal(!taskListModal);
 
-  // const openModal = () => {
-  //   const overlay = document.querySelector(".th-modal-overlay");
-  //   overlay.classList.add("show");
-  // };
+  useEffect(() => {
+    dispatch(getAllTodos())
+  }, [dispatch, getAllTodos])
 
   const onDateChange = (changedDate) => {
     setStartDate(changedDate);
 
-    const filteredTasks = TASKS.filter(
+    const filteredTasks = todos && todos.filter(
       (task) =>
         task.start_time.substring(0, 10) ===
           changedDate.toISOString().substring(0, 10) ||
@@ -90,19 +97,8 @@ const DHomePage = () => {
         startDate={startDate}
         toggle={toggleTaskListModal}
         modal={taskListModal}
+        setAddTodosModal={setAddTodosModal}
       />
-
-      {/* <TodosPage /> */}
-
-
-      {/* <img
-        src="/images/plus-icon.svg"
-        onClick={openModal}
-        className="plus-icon openModal c-hand"
-        alt=""
-        height="70"
-        width="70"
-      /> */}
     </Wrapper>
   );
 };

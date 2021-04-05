@@ -97,7 +97,7 @@ const Wrapper = styled.div`
 
 const TodoItem = () => {
   return (
-    <div className="todo-item">
+    <div>
       <input type="checkbox" name="" id="" />
       <div className="text-content">
         <p>Meeting With Saathi</p>

@@ -1,14 +1,16 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import styled from "styled-components";
 
 import TodoItem from "./TodoItem";
-import TASKS from "../../../utils/tasks.json";
 
 const TaskListModal = (props) => {
-  const { className, startDate, toggle, modal } = props;
+  const { className, startDate, toggle, modal, setAddTodosModal } = props;
+  const state = useSelector(state => state.todos)
+  const todos = state.todos
 
-  const filteredTasks = TASKS.filter(
+  const filteredTasks = todos && todos.filter(
     (task) =>
       task.start_time.substring(0, 10) ===
         startDate.toISOString().substring(0, 10) ||
@@ -28,9 +30,6 @@ const TaskListModal = (props) => {
 
   const sD = new Date(startDate)
   const readableDate = sD.toDateString();
-
-  // const unCompletedTasks = filteredTasks.filter(task => task.status !== 'completed');
-  // console.log("unCompleted", unCompletedTasks);
   return (
     <div>
       <Modal
@@ -56,7 +55,7 @@ const TaskListModal = (props) => {
               </div>
             </div>
             <div className="todo-completed box">
-              <p className="text-muted mb-3">List of all uncompleted Tasks</p>
+              <p className="text-muted mb-3">List of all completed Tasks</p>
 
               <div className="content">
                 <small className="mb-3">
@@ -70,7 +69,7 @@ const TaskListModal = (props) => {
               </div>
 
               <img
-                // onClick={openModal}
+                onClick={() => setAddTodosModal(true)}
                 src="/images/plus-icon.svg"
                 className="plus-icon"
                 alt=""

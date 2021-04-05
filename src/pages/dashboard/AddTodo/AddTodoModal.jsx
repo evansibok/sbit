@@ -1,22 +1,27 @@
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
 import { Modal, ModalHeader, ModalBody, Input } from "reactstrap";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const todoState = {
-  task_name: "",
-  details: "",
-  status: "",
-  start_time: "",
-  end_time: "",
-};
+import actions from '../../../redux/actions';
 
 const AddTodoModal = (props) => {
   const { buttonLabel, className, startDate, modal, toggle, setPModal } = props;
+  const { addTodo } = actions;
+  const todoState = {
+    task_name: "",
+    details: "",
+    status: "pending",
+    start_time: startDate.toISOString(),
+    end_time: "",
+  };
+  const dispatch = useDispatch();
 
   const [todoForm, setTodoForm] = useState(todoState);
-  const [endDate, setEndDate] = useState(new Date());
+  // const [selectActive, setSelectActive] = useState(false);
+  const [endDate, setEndDate] = useState(startDate);
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -25,27 +30,23 @@ const AddTodoModal = (props) => {
       [name]: value,
     });
   };
-  console.log("todoForm", todoForm);
 
   const onDateChange = (date) => {
     setEndDate(date);
     setTodoForm({
       ...todoForm,
-      end_time: endDate.toISOString()
-    })
+      end_time: endDate.toISOString(),
+    });
   };
 
-  const addTodo = (evt) => {
+  const handleAddTodo = (evt) => {
     evt.preventDefault();
 
     todoForm["start_time"] = startDate.toISOString();
 
-    console.log("add todo clicked");
-    if ("status" === "successful") {
-      setPModal(false);
-    }
-    
-    // setTodoForm(todoState);
+    dispatch(addTodo(todoForm))
+    setPModal(false);
+    setTodoForm(todoState);
   };
 
   const externalCloseBtn = (
@@ -112,12 +113,13 @@ const AddTodoModal = (props) => {
                 <DatePicker
                   selected={endDate}
                   onChange={(date) => onDateChange(date)}
+                  placeholderText="Select Date"
                 />
               </div>
             </DateCon>
 
             <div className="text-center mt-4">
-              <button className="btn btn-primary mt-4" onClick={addTodo}>
+              <button className="btn btn-primary mt-4" onClick={handleAddTodo}>
                 {buttonLabel}
               </button>
             </div>

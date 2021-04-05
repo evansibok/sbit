@@ -1,10 +1,11 @@
 import React from 'react';
+import { Input } from 'reactstrap';
 
 
 const TodoItem = ({ task }) => {
   return (
     <div className="todo-item">
-      <input type="checkbox" name="" id="" />
+      <Input type="checkbox" />
       <div className="text-content">
         <p>{task && task.task_name}</p>
         <small>
