@@ -26,6 +26,9 @@ const TaskListModal = (props) => {
     </button>
   );
 
+  const sD = new Date(startDate)
+  const readableDate = sD.toDateString();
+
   // const unCompletedTasks = filteredTasks.filter(task => task.status !== 'completed');
   // console.log("unCompleted", unCompletedTasks);
   return (
@@ -36,7 +39,7 @@ const TaskListModal = (props) => {
         className={className}
         external={externalCloseBtn}
       >
-        <ModalHeader>{startDate.toISOString().substring(0, 10)}</ModalHeader>
+        <ModalHeader>{readableDate}</ModalHeader>
         <ModalBody>
           <Wrapper>
             <div className="todo-uncompleted box">
