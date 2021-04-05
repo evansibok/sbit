@@ -4,17 +4,21 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import TASKS from "../../utils/tasks.json";
-// import TodosModal from './TodosPage';
-import PromptModal from "../../components/PromptModal";
-import AddTodoModal from "../../components/AddTodoModal";
+import PromptModal from "./AddTodo/PromptModal";
+import AddTodoModal from "./AddTodo/AddTodoModal";
+import TaskListModal from './TaskList/TaskListModal';
+
+import TodosPage from './TaskList/TodosPage';
 
 const DHomePage = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [pModal, setPModal] = useState(false);
   const [addTodosModal, setAddTodosModal] = useState(false);
+  const [taskListModal, setTaskListModal] = useState(true);
 
   const togglePModal = () => setPModal(!pModal);
   const toggleAddTodosModal = () => setAddTodosModal(!addTodosModal);
+  const toggleTaskListModal = () => setTaskListModal(!taskListModal);
 
   // const openModal = () => {
   //   const overlay = document.querySelector(".th-modal-overlay");
@@ -36,7 +40,7 @@ const DHomePage = () => {
     if (filteredTasks.length === 0) {
       setPModal(true);
     } else {
-      //  openModal();
+      setTaskListModal(true)
       console.log("filtered task is not empty");
     }
 
@@ -81,9 +85,15 @@ const DHomePage = () => {
         setPModal={setPModal}
       />
 
-      {/* <TodosModal
+      <TaskListModal
+        className="task-list-modal"
+        startDate={startDate}
+        toggle={toggleTaskListModal}
+        modal={taskListModal}
+      />
 
-     /> */}
+      <TodosPage />
+
 
       {/* <img
         src="/images/plus-icon.svg"
@@ -121,4 +131,10 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
   }
+
+  /* SUPPOSE TO INCREASE THE WIDTH OF THE MODAL BUT NOT WORKING YET */
+  /* &.task-list-modal .modal-content {
+    width: 800px;
+  } */
+
 `;
