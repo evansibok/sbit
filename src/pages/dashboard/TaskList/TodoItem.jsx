@@ -39,6 +39,7 @@ const TodoItem = ({ task, setHoldData }) => {
         type="checkbox"
         className="custom-input"
         onChange={() => testTask(task)}
+        defaultChecked={task.status === "completed" ? true : false}
       />
       <div className="text-content">
         <p>{task && task.task_name}</p>

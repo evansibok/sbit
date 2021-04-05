@@ -12,6 +12,7 @@ const TaskListModal = (props) => {
     modal,
     setAddTodosModal,
     filteredTodos,
+    newTodo  ,
   } = props;
 
   const [holdData, setHoldData] = useState({})
@@ -43,9 +44,22 @@ const TaskListModal = (props) => {
   } else {
 
         console.log("data-------holdData----------", holdData);
-    const   currentTodo = filteredTodos.find(todo => todo.id===holdData.id);
+    // const   currentTodo = filteredTodos.find(todo => todo.id===holdData.id);
+    const  currentTodo  = filteredTodos.filter((item) => item.id !== holdData.id);
+
+      //  console.log("data-----------currentTodo  ------", currentTodo  );
+                // filteredTodos = currentTodo.push( holdData)
+              // let afterPush =  currentTodo.push(holdData)
+
+                newTodo(currentTodo , holdData );   
+
     // currentTodo.status = holdData.status
-    console.log("new data holdData--------> ", currentTodo);
+    // console.log("new data holdData--------> ", currentTodo);
+
+    // filteredTodos.push(holdData)
+
+      // currentTodo.status = currentTodo.currentTodo
+    
   }
 
   // console.log("completedTasks", completedTasks);
@@ -94,9 +108,12 @@ const TaskListModal = (props) => {
                 </small>
                 {filteredTodos &&
                   filteredTodos.map((todo, idx) =>
-                    todo.status === "completed" ? (
+                    todo.status === "" ? (
+                      // <TodoItem task={todo} setHoldData={setHoldData} />
+                     
                       <TodoItem task={todo} setHoldData={setHoldData} />
                     ) : (
+                      
                       <div>{/* {todo.task_name} */}</div>
                     )
                   )}
@@ -123,13 +140,14 @@ const TaskListModal = (props) => {
 
                 {filteredTodos &&
                   filteredTodos.map((todo, idx) =>
-                    todo.status !== "" ? (
-                      // <TodoItem task={todo} setHoldData={setHoldData} />
+                    todo.status !== "completed" ? (
+
                       <div>{/* {todo.task_name} */}</div>
 
                     ) : (
-                      // <div>{/* {todo.task_name} */}</div>
-                    <TodoItem task={todo} setHoldData={setHoldData} />
+                      <TodoItem task={todo} setHoldData={setHoldData} />
+                      
+                    
                     )
                   )}
                 {/* {completedTasks &&

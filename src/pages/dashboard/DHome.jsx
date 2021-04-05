@@ -73,6 +73,24 @@ const DHomePage = () => {
     }
   };
 
+  const passtodo =( array ,data) =>{
+    if (Object.keys(array.length) === 0 && Object.keys(data) === 0)  {
+      return
+    } else {
+    console.log("data new D home data----->", data,array)
+     var newArray = []
+      const newDATA =  array.push(data)
+
+    //  setFilteredTodos(array => [...array, data])
+    //  setFilteredTodos(array.push(data))
+      // array.push(data)/
+
+    // var lastesArray  = newArray.push(data)
+    // setFilteredTodos( array  )
+    console.log("data new D home data--=lastesArray====2--->", newDATA )
+    }
+  }
+
   return (
     <Wrapper className="">
       <p className="my-3 text-primary">Hello, Benjamin</p>
@@ -107,6 +125,7 @@ const DHomePage = () => {
 
       <TaskListModal
         filteredTodos={filteredTodos}
+        newTodo={passtodo}
         className="task-list-modal"
         startDate={startDate}
         toggle={toggleTaskListModal}
