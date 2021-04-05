@@ -44,6 +44,8 @@ const AddTodoModal = (props) => {
     if ("status" === "successful") {
       setPModal(false);
     }
+    
+    // setTodoForm(todoState);
   };
 
   const externalCloseBtn = (
