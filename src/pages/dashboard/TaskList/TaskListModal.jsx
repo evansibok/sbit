@@ -18,6 +18,7 @@ const TaskListModal = (props) => {
 
   // const [holdData, setHoldData] = useState({});
 
+  
   // console.log("completedTasks", completedTasks);
   // console.log("uncompletedTasks", uncompletedTasks);
 
@@ -40,9 +41,11 @@ const TaskListModal = (props) => {
   if (Object.keys(holdData) === 0) {
     return
   } else {
-    // currentTodo = filteredTodos.find(id => id===holdData.id);
-    // currentTodo.status = 
-    // console.log('holdData', holdData)
+
+        console.log("data-------holdData----------", holdData);
+    const   currentTodo = filteredTodos.find(todo => todo.id===holdData.id);
+    // currentTodo.status = holdData.status
+    console.log("new data holdData--------> ", currentTodo);
   }
 
   // console.log("completedTasks", completedTasks);
@@ -84,7 +87,7 @@ const TaskListModal = (props) => {
           <Wrapper>
             <div className="todo-completed box">
               <p className="text-muted mb-3">List of all uncompleted Tasks</p>
-
+              {console.log("data ================>", filteredTodos)}
               <div className="content">
                 <small className="mb-3">
                   To mark a task completed, check the box
@@ -120,10 +123,13 @@ const TaskListModal = (props) => {
 
                 {filteredTodos &&
                   filteredTodos.map((todo, idx) =>
-                    todo.status !== "completed" ? (
-                      <TodoItem task={todo} setHoldData={setHoldData} />
-                    ) : (
+                    todo.status !== "" ? (
+                      // <TodoItem task={todo} setHoldData={setHoldData} />
                       <div>{/* {todo.task_name} */}</div>
+
+                    ) : (
+                      // <div>{/* {todo.task_name} */}</div>
+                    <TodoItem task={todo} setHoldData={setHoldData} />
                     )
                   )}
                 {/* {completedTasks &&
