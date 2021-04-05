@@ -20,6 +20,10 @@ const DHomePage = () => {
   const [pModal, setPModal] = useState(false);
   const [addTodosModal, setAddTodosModal] = useState(false);
   const [taskListModal, setTaskListModal] = useState(false);
+  const [completedTasks, setCompletedTasks] = useState([]);
+  const [uncompletedTasks, setUncompletedTasks] = useState();
+
+  const [filteredTodos, setFilteredTodos] = useState([])
 
   const togglePModal = () => setPModal(!pModal);
   const toggleAddTodosModal = () => setAddTodosModal(!addTodosModal);
@@ -32,16 +36,6 @@ const DHomePage = () => {
   const onDateChange = (changedDate) => {
     const newDATE = new Date();
     setStartDate(changedDate);
-
-    console.log("check my new data------->", changedDate, newDATE);
-    console.log("check my new data date string------->", changedDate.toDateString(), newDATE.toDateString());
-    console.log(
-      "check my new data date string------->",
-      changedDate.toISOString().substring(0, 10),
-      newDATE.toISOString().substring(0, 10)
-    );
-
-
     const filteredTasks =
       todos &&
       todos.filter(
@@ -51,9 +45,7 @@ const DHomePage = () => {
           task.end_time.substring(0, 10) ===
             changedDate.toISOString().substring(0, 10)
       );
-    console.log("filteredTasks", filteredTasks);
-
-
+    setFilteredTodos(filteredTasks)
 
     if ( changedDate.toISOString().substring(0, 10) === newDATE.toISOString().substring(0, 10)) {
       console.log("changedDate is today!");
@@ -114,11 +106,16 @@ const DHomePage = () => {
       />
 
       <TaskListModal
+        filteredTodos={filteredTodos}
         className="task-list-modal"
         startDate={startDate}
         toggle={toggleTaskListModal}
         modal={taskListModal}
         setAddTodosModal={setAddTodosModal}
+        completedTasks={completedTasks}
+        uncompletedTasks={uncompletedTasks}
+        setCompletedTasks={setCompletedTasks}
+        setUncompletedTasks={setUncompletedTasks}
       />
     </Wrapper>
   );
@@ -142,7 +139,6 @@ const Wrapper = styled.div`
       font-size: 2rem;
     }
   }
-
   .pick-date {
     display: flex;
     justify-content: center;

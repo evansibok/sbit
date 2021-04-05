@@ -3,7 +3,7 @@ import * as TYPES from '../types';
 const INITIAL_STATE = {
   isLoading: false,
   errorMessage: "",
-  todos: [],
+  todos: []
 };
 
 export function todoReducer(state = INITIAL_STATE, action) {

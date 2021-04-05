@@ -1,24 +1,52 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, {useState} from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import styled from "styled-components";
 
 import TodoItem from "./TodoItem";
 
 const TaskListModal = (props) => {
-  const { className, startDate, toggle, modal, setAddTodosModal } = props;
-  const state = useSelector((state) => state.todos);
-  const todos = state.todos;
+  const {
+    className,
+    startDate,
+    toggle,
+    modal,
+    setAddTodosModal,
+    filteredTodos,
+  } = props;
 
-  const filteredTasks =
-    todos &&
-    todos.filter(
-      (task) =>
-        task.start_time.substring(0, 10) ===
-          startDate.toISOString().substring(0, 10) ||
-        task.end_time.substring(0, 10) ===
-          startDate.toISOString().substring(0, 10)
-    );
+  const [holdData, setHoldData] = useState({})
+
+  // const [holdData, setHoldData] = useState({});
+
+  // console.log("completedTasks", completedTasks);
+  // console.log("uncompletedTasks", uncompletedTasks);
+
+  // if (Object.keys(holdData).length === 0) {
+  //   console.log('holdData', holdData)
+  // } else {
+  //   if(holdData['status'] === 'completed'){
+  //     // setCompletedTasks([...completedTasks, holdData]);
+  //     // uncompletedTasks.forEach(task => {
+  //     //   if(task.id !== holdData.id){
+  //     //     uncompletedTasks.push(task)
+  //     //   }
+  //     // })
+  //     console.log('completed Data', holdData)
+  //   } else {
+  //    console.log("not completed Data", holdData);
+  //   }
+  // }
+
+  if (Object.keys(holdData) === 0) {
+    return
+  } else {
+    // currentTodo = filteredTodos.find(id => id===holdData.id);
+    // currentTodo.status = 
+    // console.log('holdData', holdData)
+  }
+
+  // console.log("completedTasks", completedTasks);
+  // console.log("uncompletedTasks", uncompletedTasks);
 
   const externalCloseBtn = (
     <button
@@ -39,6 +67,8 @@ const TaskListModal = (props) => {
 
   // tomorrow or next
 
+  // const completedTasks = ;
+
   const sD = new Date(startDate);
   const readableDate = sD.toDateString();
   return (
@@ -49,26 +79,37 @@ const TaskListModal = (props) => {
         className={className}
         external={externalCloseBtn}
       >
-        {/* {
-           console.log("data--")
-         } */}
         <ModalHeader>{readableDate}</ModalHeader>
         <ModalBody>
           <Wrapper>
-            <div className="todo-uncompleted box">
+            <div className="todo-completed box">
               <p className="text-muted mb-3">List of all uncompleted Tasks</p>
 
               <div className="content">
                 <small className="mb-3">
                   To mark a task completed, check the box
                 </small>
-                {filteredTasks &&
-                  filteredTasks
-                    .filter((task) => task.status !== "completed")
-                    .map((tk) => <TodoItem task={tk} />)}
+                {filteredTodos &&
+                  filteredTodos.map((todo, idx) =>
+                    todo.status === "completed" ? (
+                      <TodoItem task={todo} setHoldData={setHoldData} />
+                    ) : (
+                      <div>{/* {todo.task_name} */}</div>
+                    )
+                  )}
+
+                {/* {uncompletedTasks &&
+                  uncompletedTasks.map((tk) => (
+                    <TodoItem
+                      task={tk}
+                      completed={completedTasks}
+                      uncompleted={uncompletedTasks}
+                      // setHoldData={setHoldData}
+                    />
+                  ))} */}
               </div>
             </div>
-            <div className="todo-completed box">
+            <div className="todo-uncompleted box">
               <p className="text-muted mb-3">List of all completed Tasks</p>
 
               <div className="content">
@@ -76,16 +117,35 @@ const TaskListModal = (props) => {
                   {" "}
                   To mark a task completed, check the box
                 </small>
-                {filteredTasks &&
-                  filteredTasks
-                    .filter((task) => task.status === "completed")
-                    .map((tk) => <TodoItem task={tk} />)}
+
+                {filteredTodos &&
+                  filteredTodos.map((todo, idx) =>
+                    todo.status !== "completed" ? (
+                      <TodoItem task={todo} setHoldData={setHoldData} />
+                    ) : (
+                      <div>{/* {todo.task_name} */}</div>
+                    )
+                  )}
+                {/* {completedTasks &&
+                  completedTasks.map((tk) => (
+                    <TodoItem
+                      task={tk}
+                      completed={completedTasks}
+                      uncompleted={uncompletedTasks}
+                      // setHoldData={setHoldData}
+                    />
+                  ))} */}
               </div>
 
               <img
                 style={{
-                  display: startDate.toISOString().substring(0, 10) ===
-    new Date().toISOString().substring(0, 10) ? "unset" : startDate < new Date() ? "none" : "unset",
+                  display:
+                    startDate.toISOString().substring(0, 10) ===
+                    new Date().toISOString().substring(0, 10)
+                      ? "unset"
+                      : startDate < new Date()
+                      ? "none"
+                      : "unset",
                 }}
                 onClick={() => setAddTodosModal(true)}
                 src="/images/plus-icon.svg"
