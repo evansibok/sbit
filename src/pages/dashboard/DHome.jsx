@@ -8,7 +8,7 @@ import PromptModal from "./AddTodo/PromptModal";
 import AddTodoModal from "./AddTodo/AddTodoModal";
 import TaskListModal from './TaskList/TaskListModal';
 
-import TodosPage from './TaskList/TodosPage';
+// import TodosPage from './TaskList/TodosPage';
 
 const DHomePage = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -92,7 +92,7 @@ const DHomePage = () => {
         modal={taskListModal}
       />
 
-      <TodosPage />
+      {/* <TodosPage /> */}
 
 
       {/* <img
