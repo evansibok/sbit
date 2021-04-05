@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import styled from "styled-components";
 
@@ -7,16 +7,18 @@ import TodoItem from "./TodoItem";
 
 const TaskListModal = (props) => {
   const { className, startDate, toggle, modal, setAddTodosModal } = props;
-  const state = useSelector(state => state.todos)
-  const todos = state.todos
+  const state = useSelector((state) => state.todos);
+  const todos = state.todos;
 
-  const filteredTasks = todos && todos.filter(
-    (task) =>
-      task.start_time.substring(0, 10) ===
-        startDate.toISOString().substring(0, 10) ||
-      task.end_time.substring(0, 10) ===
-        startDate.toISOString().substring(0, 10)
-  );
+  const filteredTasks =
+    todos &&
+    todos.filter(
+      (task) =>
+        task.start_time.substring(0, 10) ===
+          startDate.toISOString().substring(0, 10) ||
+        task.end_time.substring(0, 10) ===
+          startDate.toISOString().substring(0, 10)
+    );
 
   const externalCloseBtn = (
     <button
@@ -28,7 +30,16 @@ const TaskListModal = (props) => {
     </button>
   );
 
-  const sD = new Date(startDate)
+  // today -> show button
+  // startDate.toISOString().substring(0, 10) ===
+  // new Date().toISOString().substring(0, 10);
+
+  // yesterday
+  // startDate < new Date();
+
+  // tomorrow or next
+
+  const sD = new Date(startDate);
   const readableDate = sD.toDateString();
   return (
     <div>
@@ -38,6 +49,9 @@ const TaskListModal = (props) => {
         className={className}
         external={externalCloseBtn}
       >
+        {/* {
+           console.log("data--")
+         } */}
         <ModalHeader>{readableDate}</ModalHeader>
         <ModalBody>
           <Wrapper>
@@ -69,6 +83,10 @@ const TaskListModal = (props) => {
               </div>
 
               <img
+                style={{
+                  display: startDate.toISOString().substring(0, 10) ===
+    new Date().toISOString().substring(0, 10) ? "unset" : startDate < new Date() ? "none" : "unset",
+                }}
                 onClick={() => setAddTodosModal(true)}
                 src="/images/plus-icon.svg"
                 className="plus-icon"

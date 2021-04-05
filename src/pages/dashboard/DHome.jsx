@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-
 import PromptModal from "./AddTodo/PromptModal";
 import AddTodoModal from "./AddTodo/AddTodoModal";
-import TaskListModal from './TaskList/TaskListModal';
+import TaskListModal from "./TaskList/TaskListModal";
 
-import actions from '../../redux/actions';
+import actions from "../../redux/actions";
 
 const DHomePage = () => {
   const { getAllTodos } = actions;
   const dispatch = useDispatch();
-  const state = useSelector(state => state.todos);
+  const state = useSelector((state) => state.todos);
   const todos = state.todos;
 
   const [startDate, setStartDate] = useState(new Date());
@@ -27,25 +26,58 @@ const DHomePage = () => {
   const toggleTaskListModal = () => setTaskListModal(!taskListModal);
 
   useEffect(() => {
-    dispatch(getAllTodos())
-  }, [dispatch, getAllTodos])
+    dispatch(getAllTodos());
+  }, [dispatch, getAllTodos]);
 
   const onDateChange = (changedDate) => {
+    const newDATE = new Date();
     setStartDate(changedDate);
 
-    const filteredTasks = todos && todos.filter(
-      (task) =>
-        task.start_time.substring(0, 10) ===
-          changedDate.toISOString().substring(0, 10) ||
-        task.end_time.substring(0, 10) ===
-          changedDate.toISOString().substring(0, 10)
+    console.log("check my new data------->", changedDate, newDATE);
+    console.log("check my new data date string------->", changedDate.toDateString(), newDATE.toDateString());
+    console.log(
+      "check my new data date string------->",
+      changedDate.toISOString().substring(0, 10),
+      newDATE.toISOString().substring(0, 10)
     );
+
+
+    const filteredTasks =
+      todos &&
+      todos.filter(
+        (task) =>
+          task.start_time.substring(0, 10) ===
+            changedDate.toISOString().substring(0, 10) ||
+          task.end_time.substring(0, 10) ===
+            changedDate.toISOString().substring(0, 10)
+      );
     console.log("filteredTasks", filteredTasks);
 
-    if (filteredTasks.length === 0) {
-      setPModal(true);
+
+
+    if ( changedDate.toISOString().substring(0, 10) === newDATE.toISOString().substring(0, 10)) {
+      console.log("changedDate is today!");
+
+      if (filteredTasks.length === 0) {
+        setPModal(true);
+      } else {
+        setTaskListModal(true);
+      }
+    } else if (changedDate < newDATE) {
+      console.log('changedDate is less than today!')
+      if (filteredTasks.length === 0){
+        return
+      } else {
+        setTaskListModal(true);
+      }
     } else {
-      setTaskListModal(true)
+      console.log("changedDate is greater than today!");
+
+      if (filteredTasks.length === 0) {
+        setPModal(true);
+      } else {
+        setTaskListModal(true);
+      }
     }
   };
 
@@ -60,6 +92,7 @@ const DHomePage = () => {
         <DatePicker
           selected={startDate}
           onChange={(date) => onDateChange(date)}
+          // isValidDate={disablePastDt}
           inline
         />
       </div>
