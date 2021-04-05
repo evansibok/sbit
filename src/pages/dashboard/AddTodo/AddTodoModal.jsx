@@ -8,7 +8,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import actions from '../../../redux/actions';
 
 const AddTodoModal = (props) => {
-  const { buttonLabel, className, startDate, modal, toggle, setPModal } = props;
+  const {
+    buttonLabel,
+    className,
+    startDate,
+    modal,
+    toggle,
+    setPModal,
+    setAddTodosModal,
+  } = props;
   const { addTodo } = actions;
   const todoState = {
     task_name: "",
@@ -20,8 +28,7 @@ const AddTodoModal = (props) => {
   const dispatch = useDispatch();
 
   const [todoForm, setTodoForm] = useState(todoState);
-  // const [selectActive, setSelectActive] = useState(false);
-  const [endDate, setEndDate] = useState(startDate);
+  const [endDate, setEndDate] = useState();
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -35,7 +42,7 @@ const AddTodoModal = (props) => {
     setEndDate(date);
     setTodoForm({
       ...todoForm,
-      end_time: endDate.toISOString(),
+      end_time: date.toISOString(),
     });
   };
 
@@ -45,6 +52,7 @@ const AddTodoModal = (props) => {
     todoForm["start_time"] = startDate.toISOString();
 
     dispatch(addTodo(todoForm))
+    setAddTodosModal(false);
     setPModal(false);
     setTodoForm(todoState);
   };

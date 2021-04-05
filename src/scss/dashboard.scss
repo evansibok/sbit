@@ -47,5 +47,9 @@
 }
 
 .task-list-modal .modal-content {
+  position: relative;
   width: 800px !important;
+  margin-left: -100px;
+  margin-top: 50px;
+  margin-bottom: 50px !important;
 }

@@ -51,7 +51,7 @@ const TaskListModal = (props) => {
                 {filteredTasks &&
                   filteredTasks
                     .filter((task) => task.status !== "completed")
-                    .map((tk) => <TodoItem task={tk} key={tk.id} />)}
+                    .map((tk) => <TodoItem task={tk} />)}
               </div>
             </div>
             <div className="todo-completed box">
@@ -65,7 +65,7 @@ const TaskListModal = (props) => {
                 {filteredTasks &&
                   filteredTasks
                     .filter((task) => task.status === "completed")
-                    .map((tk) => <TodoItem task={tk} key={tk.id} />)}
+                    .map((tk) => <TodoItem task={tk} />)}
               </div>
 
               <img

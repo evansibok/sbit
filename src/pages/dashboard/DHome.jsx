@@ -4,14 +4,12 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import TASKS from "../../utils/tasks.json";
+
 import PromptModal from "./AddTodo/PromptModal";
 import AddTodoModal from "./AddTodo/AddTodoModal";
 import TaskListModal from './TaskList/TaskListModal';
 
 import actions from '../../redux/actions';
-
-// import TodosPage from './TaskList/TodosPage';
 
 const DHomePage = () => {
   const { getAllTodos } = actions;
@@ -22,7 +20,7 @@ const DHomePage = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [pModal, setPModal] = useState(false);
   const [addTodosModal, setAddTodosModal] = useState(false);
-  const [taskListModal, setTaskListModal] = useState(true);
+  const [taskListModal, setTaskListModal] = useState(false);
 
   const togglePModal = () => setPModal(!pModal);
   const toggleAddTodosModal = () => setAddTodosModal(!addTodosModal);
@@ -48,19 +46,8 @@ const DHomePage = () => {
       setPModal(true);
     } else {
       setTaskListModal(true)
-      console.log("filtered task is not empty");
     }
-
-    // From Calendar (new Date())
-    // convert .toISOString() before sending to the backend
   };
-
-  // from the backend (ISO String)
-  // console.log("first start time", TASKS[0].start_time);
-  // convert to new Date()
-  // let start_time = new Date(TASKS[0].start_time);
-  // then to Readable date (Apr 03 2021) To display in the task list
-  // start_time.toDateString(); --> ("Fri Apr 16 2021");
 
   return (
     <Wrapper className="">
@@ -88,6 +75,7 @@ const DHomePage = () => {
         buttonLabel="Add Todo"
         startDate={startDate}
         toggle={toggleAddTodosModal}
+        setAddTodosModal={setAddTodosModal}
         modal={addTodosModal}
         setPModal={setPModal}
       />
@@ -127,10 +115,4 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
   }
-
-  /* SUPPOSE TO INCREASE THE WIDTH OF THE MODAL BUT NOT WORKING YET */
-  /* &.task-list-modal .modal-content {
-    width: 800px;
-  } */
-
 `;
