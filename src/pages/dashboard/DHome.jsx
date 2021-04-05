@@ -3,6 +3,7 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import TASKS from "../../utils/tasks.json";
 
 const DHomePage = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -12,22 +13,41 @@ const DHomePage = () => {
     overlay.classList.add("show");
   };
 
-  const onDateChange = (date) => {
-    setStartDate(date);
-    console.log('date', date)
-  }
+  const onDateChange = (changedDate) => {
+    setStartDate(changedDate);
+    // From Calendar (new Date())
+    // convert .toISOString() before sending to the backend
+    let ISODate = changedDate.toISOString();
+    // console.log("changedDate", changedDate);
+    console.log("ISODate", ISODate.substring(0, 10));
+    const filteredTasks = TASKS.filter(
+      task =>
+        task.start_time.substring(0, 10) === changedDate.toISOString().substring(0, 10) ||
+        task.end_time.substring(0, 10) === changedDate.toISOString().substring(0, 10)
+    );
+    console.log("filteredTasks", filteredTasks);
+  };
 
+
+  // from the backend (ISO String)
+  console.log("first start time", TASKS[0].start_time);
+  // convert to new Date()
+  let start_time = new Date(TASKS[0].start_time);
+  // then to Readable date (Apr 03 2021) To display in the task list
+  // start_time.toDateString(); --> ("Fri Apr 16 2021");
 
   return (
     <Wrapper className="">
       <p className="my-3 text-primary">Hello, Benjamin</p>
+      <p className="my-3 text-dark font-weight-bold d-flex align-items-center justify-content-center">
+        Select a Date from the Calendar to view or add a task
+      </p>
 
       <div className="pick-date">
         <DatePicker
           selected={startDate}
           onChange={(date) => onDateChange(date)}
           inline
-          className="calendar"
         />
       </div>
 
