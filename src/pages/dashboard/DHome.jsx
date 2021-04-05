@@ -11,36 +11,34 @@ import AddTodoModal from "../../components/AddTodoModal";
 const DHomePage = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [pModal, setPModal] = useState(false);
-  // const [addTodosModal, setAddTodosModal] = useState(false);
+  const [addTodosModal, setAddTodosModal] = useState(false);
 
   const togglePModal = () => setPModal(!pModal);
-  // const toggleAddTodosModal = () => setAddTodosModal(!addTodosModal);
+  const toggleAddTodosModal = () => setAddTodosModal(!addTodosModal);
 
   // const openModal = () => {
   //   const overlay = document.querySelector(".th-modal-overlay");
   //   overlay.classList.add("show");
   // };
 
-
   const onDateChange = (changedDate) => {
     setStartDate(changedDate);
 
-     const filteredTasks = TASKS.filter(
-       (task) =>
-         task.start_time.substring(0, 10) ===
-           changedDate.toISOString().substring(0, 10) ||
-         task.end_time.substring(0, 10) ===
-           changedDate.toISOString().substring(0, 10)
-     );
-     console.log("filteredTasks", filteredTasks);
+    const filteredTasks = TASKS.filter(
+      (task) =>
+        task.start_time.substring(0, 10) ===
+          changedDate.toISOString().substring(0, 10) ||
+        task.end_time.substring(0, 10) ===
+          changedDate.toISOString().substring(0, 10)
+    );
+    console.log("filteredTasks", filteredTasks);
 
-     if (filteredTasks.length === 0) {
-       setPModal(true);
-     } else {
+    if (filteredTasks.length === 0) {
+      setPModal(true);
+    } else {
       //  openModal();
-       console.log("filtered task is not empty");
-     }
-
+      console.log("filtered task is not empty");
+    }
 
     // From Calendar (new Date())
     // convert .toISOString() before sending to the backend
@@ -72,9 +70,16 @@ const DHomePage = () => {
         className="prompt-modal"
         modal={pModal}
         toggle={togglePModal}
+        setAddTodosModal={setAddTodosModal}
       />
 
-      <AddTodoModal buttonLabel="Add Todo" startDate={startDate} />
+      <AddTodoModal
+        buttonLabel="Add Todo"
+        startDate={startDate}
+        toggle={toggleAddTodosModal}
+        modal={addTodosModal}
+        setPModal={setPModal}
+      />
 
       {/* <TodosModal
 

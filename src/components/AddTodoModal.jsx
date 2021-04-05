@@ -14,13 +14,17 @@ const todoState = {
 };
 
 const AddTodoModal = (props) => {
-  const { buttonLabel, className, startDate } = props;
+  const {
+    buttonLabel,
+    className,
+    startDate,
+    modal,
+    toggle,
+    setPModal,
+  } = props;
 
-  const [modal, setModal] = useState(true);
   const [todoForm, setTodoForm] = useState(todoState);
   const [endDate, setEndDate] = useState(new Date());
-  
-  const toggle = () => setModal(!modal);
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -32,6 +36,15 @@ const AddTodoModal = (props) => {
 
   const onDateChange = (date) => {
     setEndDate(date);
+  }
+
+  const addTodo = (evt) => {
+    evt.preventDefault();
+
+    console.log('add todo clicked')
+    if ('status' === 'successful') {
+      setPModal(false);
+    }
   }
 
   const externalCloseBtn = (
@@ -94,7 +107,6 @@ const AddTodoModal = (props) => {
                 <DatePicker
                   selected={startDate}
                   disabled
-                  // onChange={(date) => onDateChange(date)}
                 />
               </div>
               <div>
@@ -107,7 +119,7 @@ const AddTodoModal = (props) => {
             </DateCon>
 
             <div className="text-center mt-4">
-              <button className="btn btn-primary mt-4">{buttonLabel}</button>
+              <button className="btn btn-primary mt-4" onClick={addTodo}>{buttonLabel}</button>
             </div>
           </form>
         </ModalBody>

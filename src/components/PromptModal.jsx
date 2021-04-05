@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Modal, ModalBody } from "reactstrap";
 
 const PromptModal = (props) => {
-  const { className, toggle, modal } = props;
+  const { className, toggle, modal, setAddTodosModal } = props;
 
   const externalCloseBtn = (
     <button
@@ -26,19 +26,18 @@ const PromptModal = (props) => {
         <ModalBody>
           <ModalBodyCon>
             <b>
-              You have 0 task for the selected date. <br /> Tap the Plus sign to Add a
-              new task.
+              You have 0 task for the selected date. <br /> Tap the Plus sign to
+              Add a new task.
             </b>
             <br />
-              <img
+            <img
               src="/images/plus-icon.svg"
-              // onClick={openModal}
+              onClick={() => setAddTodosModal(true)}
               className="plus-icon openModal c-hand"
               alt=""
               height="40"
               width="40"
             />
-
           </ModalBodyCon>
         </ModalBody>
       </Modal>
