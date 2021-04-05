@@ -4,35 +4,52 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import TASKS from "../../utils/tasks.json";
+// import TodosModal from './TodosPage';
+import PromptModal from "../../components/PromptModal";
+import AddTodoModal from "../../components/AddTodoModal";
 
 const DHomePage = () => {
   const [startDate, setStartDate] = useState(new Date());
+  const [pModal, setPModal] = useState(false);
+  // const [addTodosModal, setAddTodosModal] = useState(false);
 
-  const openModal = () => {
-    const overlay = document.querySelector(".th-modal-overlay");
-    overlay.classList.add("show");
-  };
+  const togglePModal = () => setPModal(!pModal);
+  // const toggleAddTodosModal = () => setAddTodosModal(!addTodosModal);
+
+  // const openModal = () => {
+  //   const overlay = document.querySelector(".th-modal-overlay");
+  //   overlay.classList.add("show");
+  // };
+
 
   const onDateChange = (changedDate) => {
     setStartDate(changedDate);
+
+     const filteredTasks = TASKS.filter(
+       (task) =>
+         task.start_time.substring(0, 10) ===
+           changedDate.toISOString().substring(0, 10) ||
+         task.end_time.substring(0, 10) ===
+           changedDate.toISOString().substring(0, 10)
+     );
+     console.log("filteredTasks", filteredTasks);
+
+     if (filteredTasks.length === 0) {
+       setPModal(true);
+     } else {
+      //  openModal();
+       console.log("filtered task is not empty");
+     }
+
+
     // From Calendar (new Date())
     // convert .toISOString() before sending to the backend
-    let ISODate = changedDate.toISOString();
-    // console.log("changedDate", changedDate);
-    console.log("ISODate", ISODate.substring(0, 10));
-    const filteredTasks = TASKS.filter(
-      task =>
-        task.start_time.substring(0, 10) === changedDate.toISOString().substring(0, 10) ||
-        task.end_time.substring(0, 10) === changedDate.toISOString().substring(0, 10)
-    );
-    console.log("filteredTasks", filteredTasks);
   };
 
-
   // from the backend (ISO String)
-  console.log("first start time", TASKS[0].start_time);
+  // console.log("first start time", TASKS[0].start_time);
   // convert to new Date()
-  let start_time = new Date(TASKS[0].start_time);
+  // let start_time = new Date(TASKS[0].start_time);
   // then to Readable date (Apr 03 2021) To display in the task list
   // start_time.toDateString(); --> ("Fri Apr 16 2021");
 
@@ -51,14 +68,26 @@ const DHomePage = () => {
         />
       </div>
 
-      <img
+      <PromptModal
+        className="prompt-modal"
+        modal={pModal}
+        toggle={togglePModal}
+      />
+
+      <AddTodoModal buttonLabel="Add Todo" startDate={startDate} />
+
+      {/* <TodosModal
+
+     /> */}
+
+      {/* <img
         src="/images/plus-icon.svg"
         onClick={openModal}
         className="plus-icon openModal c-hand"
         alt=""
         height="70"
         width="70"
-      />
+      /> */}
     </Wrapper>
   );
 };
