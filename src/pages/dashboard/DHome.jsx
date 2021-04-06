@@ -31,9 +31,11 @@ const DHomePage = () => {
     dispatch(getAllTodos());
   }, [dispatch, getAllTodos]);
 
+
   const onDateChange = (changedDate) => {
     const newDATE = new Date();
     setStartDate(changedDate);
+    
     const filteredTasks =
       todos &&
       todos.filter(
@@ -77,7 +79,7 @@ const DHomePage = () => {
         <DatePicker
           selected={startDate}
           onChange={(date) => onDateChange(date)}
-          // isValidDate={disablePastDt}
+          // onChange={(date) => console.log('selected Date', date)}
           inline
         />
       </div>

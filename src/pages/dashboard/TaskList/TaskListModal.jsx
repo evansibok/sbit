@@ -18,7 +18,16 @@ const TaskListModal = (props) => {
   const externalCloseBtn = (
     <button
       className="close"
-      style={{ position: "absolute", top: "15px", right: "15px" }}
+      style={{
+        position: "absolute",
+        top: "15px",
+        right: "10%",
+        color: "#fff",
+        padding: "3px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
       onClick={toggle}
     >
       &times;

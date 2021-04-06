@@ -8,7 +8,15 @@ const PromptModal = (props) => {
   const externalCloseBtn = (
     <button
       className="close"
-      style={{ position: "absolute", top: "15px", right: "15px" }}
+      style={{
+        position: "absolute",
+        top: "15px",
+        right: "25%",
+        color: "#fff",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
       onClick={toggle}
     >
       &times;

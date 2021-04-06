@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { Modal, ModalHeader, ModalBody, Input } from "reactstrap";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -19,9 +20,10 @@ const AddTodoModal = (props) => {
   } = props;
   const { addTodo } = actions;
   const todoState = {
+    id: "",
     task_name: "",
     details: "",
-    status: "pending",
+    status: "",
     start_time: startDate.toISOString(),
     end_time: "",
   };
@@ -45,22 +47,37 @@ const AddTodoModal = (props) => {
       end_time: date.toISOString(),
     });
   };
-
+  console.log("todoForm", todoForm);
   const handleAddTodo = (evt) => {
     evt.preventDefault();
 
     todoForm["start_time"] = startDate.toISOString();
+    todoForm["id"] = uuidv4();
 
-    dispatch(addTodo(todoForm))
-    setAddTodosModal(false);
-    setPModal(false);
-    setTodoForm(todoState);
+    if(todoForm.task_name === '' || todoForm.details === '' || todoForm.end_time === ''){
+      alert('Please fill the form to continue!')
+    } else {
+      dispatch(addTodo(todoForm))
+      setAddTodosModal(false);
+      setPModal(false);
+      setTodoForm(todoState);
+    }
+
   };
 
   const externalCloseBtn = (
     <button
       className="close"
-      style={{ position: "absolute", top: "15px", right: "15px" }}
+      style={{ 
+        position: "absolute",
+        top: "15px",
+        right: "25%",
+        color: '#fff',
+        padding: '3px',
+        display: "flex",
+        justifyContent: 'center',
+        alignItems: 'center'
+     }}
       onClick={toggle}
     >
       &times;

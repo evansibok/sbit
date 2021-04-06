@@ -2,12 +2,6 @@ import * as TYPES from '../types';
 
 import TASKS from '../../utils/tasks.json';
 
-// export const setStrategy = (strategy) => {
-//   return {
-//     type: TYPES.SET_STRATEGY,
-//     payload: strategy,
-//   }
-// }
 
 export const getAllTodos = () => dispatch => {
 
@@ -36,14 +30,11 @@ export const addTodo = (todoForm) => dispatch => {
     type: TYPES.ADD_TODOS_START,
   });
 
-
   try {
-    if (TASKS.length !== 0) {
-      dispatch({
-        type: TYPES.ADD_TODOS_SUCCESS,
-        payload: todoForm
-      });
-    }
+    dispatch({
+      type: TYPES.ADD_TODOS_SUCCESS,
+      payload: todoForm
+    });
   } catch (e) {
     dispatch({
       type: TYPES.ADD_TODOS_FAILURE,
