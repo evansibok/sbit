@@ -108,6 +108,9 @@ const AddTodoModal = (props) => {
                 name="task_name"
                 value={todoForm.task_name}
                 onChange={handleChange}
+                style={{
+                  width: "-webkit-fill-available",
+                }}
               />
             </div>
 
