@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import styled from "styled-components";
 
@@ -12,58 +12,8 @@ const TaskListModal = (props) => {
     modal,
     setAddTodosModal,
     filteredTodos,
-    newTodo  ,
+    setFilteredTodos
   } = props;
-
-  const [holdData, setHoldData] = useState({})
-
-  // const [holdData, setHoldData] = useState({});
-
-  
-  // console.log("completedTasks", completedTasks);
-  // console.log("uncompletedTasks", uncompletedTasks);
-
-  // if (Object.keys(holdData).length === 0) {
-  //   console.log('holdData', holdData)
-  // } else {
-  //   if(holdData['status'] === 'completed'){
-  //     // setCompletedTasks([...completedTasks, holdData]);
-  //     // uncompletedTasks.forEach(task => {
-  //     //   if(task.id !== holdData.id){
-  //     //     uncompletedTasks.push(task)
-  //     //   }
-  //     // })
-  //     console.log('completed Data', holdData)
-  //   } else {
-  //    console.log("not completed Data", holdData);
-  //   }
-  // }
-
-  if (Object.keys(holdData) === 0) {
-    return
-  } else {
-
-        console.log("data-------holdData----------", holdData);
-    // const   currentTodo = filteredTodos.find(todo => todo.id===holdData.id);
-    const  currentTodo  = filteredTodos.filter((item) => item.id !== holdData.id);
-
-      //  console.log("data-----------currentTodo  ------", currentTodo  );
-                // filteredTodos = currentTodo.push( holdData)
-              // let afterPush =  currentTodo.push(holdData)
-
-                newTodo(currentTodo , holdData );   
-
-    // currentTodo.status = holdData.status
-    // console.log("new data holdData--------> ", currentTodo);
-
-    // filteredTodos.push(holdData)
-
-      // currentTodo.status = currentTodo.currentTodo
-    
-  }
-
-  // console.log("completedTasks", completedTasks);
-  // console.log("uncompletedTasks", uncompletedTasks);
 
   const externalCloseBtn = (
     <button
@@ -74,17 +24,6 @@ const TaskListModal = (props) => {
       &times;
     </button>
   );
-
-  // today -> show button
-  // startDate.toISOString().substring(0, 10) ===
-  // new Date().toISOString().substring(0, 10);
-
-  // yesterday
-  // startDate < new Date();
-
-  // tomorrow or next
-
-  // const completedTasks = ;
 
   const sD = new Date(startDate);
   const readableDate = sD.toDateString();
@@ -101,32 +40,22 @@ const TaskListModal = (props) => {
           <Wrapper>
             <div className="todo-completed box">
               <p className="text-muted mb-3">List of all uncompleted Tasks</p>
-              {console.log("data ================>", filteredTodos)}
               <div className="content">
                 <small className="mb-3">
                   To mark a task completed, check the box
                 </small>
                 {filteredTodos &&
-                  filteredTodos.map((todo, idx) =>
+                  filteredTodos.map((todo) =>
                     todo.status === "" ? (
-                      // <TodoItem task={todo} setHoldData={setHoldData} />
-                     
-                      <TodoItem task={todo} setHoldData={setHoldData} />
+                      <TodoItem
+                        task={todo}
+                        setFilteredTodos={setFilteredTodos}
+                        filteredTodos={filteredTodos}
+                      />
                     ) : (
-                      
-                      <div>{/* {todo.task_name} */}</div>
+                      <div></div>
                     )
                   )}
-
-                {/* {uncompletedTasks &&
-                  uncompletedTasks.map((tk) => (
-                    <TodoItem
-                      task={tk}
-                      completed={completedTasks}
-                      uncompleted={uncompletedTasks}
-                      // setHoldData={setHoldData}
-                    />
-                  ))} */}
               </div>
             </div>
             <div className="todo-uncompleted box">
@@ -139,26 +68,17 @@ const TaskListModal = (props) => {
                 </small>
 
                 {filteredTodos &&
-                  filteredTodos.map((todo, idx) =>
+                  filteredTodos.map((todo) =>
                     todo.status !== "completed" ? (
-
-                      <div>{/* {todo.task_name} */}</div>
-
+                      <div></div>
                     ) : (
-                      <TodoItem task={todo} setHoldData={setHoldData} />
-                      
-                    
+                      <TodoItem
+                        task={todo}
+                        setFilteredTodos={setFilteredTodos}
+                        filteredTodos={filteredTodos}
+                      />
                     )
                   )}
-                {/* {completedTasks &&
-                  completedTasks.map((tk) => (
-                    <TodoItem
-                      task={tk}
-                      completed={completedTasks}
-                      uncompleted={uncompletedTasks}
-                      // setHoldData={setHoldData}
-                    />
-                  ))} */}
               </div>
 
               <img

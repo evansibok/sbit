@@ -20,8 +20,6 @@ const DHomePage = () => {
   const [pModal, setPModal] = useState(false);
   const [addTodosModal, setAddTodosModal] = useState(false);
   const [taskListModal, setTaskListModal] = useState(false);
-  const [completedTasks, setCompletedTasks] = useState([]);
-  const [uncompletedTasks, setUncompletedTasks] = useState();
 
   const [filteredTodos, setFilteredTodos] = useState([])
 
@@ -48,23 +46,18 @@ const DHomePage = () => {
     setFilteredTodos(filteredTasks)
 
     if ( changedDate.toISOString().substring(0, 10) === newDATE.toISOString().substring(0, 10)) {
-      console.log("changedDate is today!");
-
       if (filteredTasks.length === 0) {
         setPModal(true);
       } else {
         setTaskListModal(true);
       }
     } else if (changedDate < newDATE) {
-      console.log('changedDate is less than today!')
       if (filteredTasks.length === 0){
         return
       } else {
         setTaskListModal(true);
       }
     } else {
-      console.log("changedDate is greater than today!");
-
       if (filteredTasks.length === 0) {
         setPModal(true);
       } else {
@@ -72,24 +65,6 @@ const DHomePage = () => {
       }
     }
   };
-
-  const passtodo =( array ,data) =>{
-    if (Object.keys(array.length) === 0 && Object.keys(data) === 0)  {
-      return
-    } else {
-    console.log("data new D home data----->", data,array)
-     var newArray = []
-      const newDATA =  array.push(data)
-
-    //  setFilteredTodos(array => [...array, data])
-    //  setFilteredTodos(array.push(data))
-      // array.push(data)/
-
-    // var lastesArray  = newArray.push(data)
-    // setFilteredTodos( array  )
-    console.log("data new D home data--=lastesArray====2--->", newDATA )
-    }
-  }
 
   return (
     <Wrapper className="">
@@ -125,16 +100,12 @@ const DHomePage = () => {
 
       <TaskListModal
         filteredTodos={filteredTodos}
-        newTodo={passtodo}
+        setFilteredTodos={setFilteredTodos}
         className="task-list-modal"
         startDate={startDate}
         toggle={toggleTaskListModal}
         modal={taskListModal}
         setAddTodosModal={setAddTodosModal}
-        completedTasks={completedTasks}
-        uncompletedTasks={uncompletedTasks}
-        setCompletedTasks={setCompletedTasks}
-        setUncompletedTasks={setUncompletedTasks}
       />
     </Wrapper>
   );
