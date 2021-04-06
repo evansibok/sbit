@@ -21,7 +21,7 @@ const TaskListModal = (props) => {
       style={{
         position: "absolute",
         top: "15px",
-        right: "10%",
+        right: "15%",
         color: "#fff",
         padding: "3px",
         display: "flex",

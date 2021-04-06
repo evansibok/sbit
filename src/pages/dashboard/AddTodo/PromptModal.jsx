@@ -11,7 +11,7 @@ const PromptModal = (props) => {
       style={{
         position: "absolute",
         top: "15px",
-        right: "25%",
+        right: "28%",
         color: "#fff",
         display: "flex",
         justifyContent: "center",

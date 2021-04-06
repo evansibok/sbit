@@ -71,7 +71,7 @@ const AddTodoModal = (props) => {
       style={{ 
         position: "absolute",
         top: "15px",
-        right: "25%",
+        right: "28%",
         color: '#fff',
         padding: '3px',
         display: "flex",
