@@ -4,7 +4,6 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import FrontLayout from "./layouts/FrontLayout";
 import AuthPage from "./pages/AuthPage";
 import DHomePage from "./pages/dashboard/DHome";
-import TodosPage from "./pages/dashboard/TodosPage";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 
@@ -41,13 +40,6 @@ const Routes = () => {
           exact
           path="/dashboard"
           component={DHomePage}
-          layout={DashboardLayout}
-        />
-
-        <AppRoute
-          exact
-          path="/dashboard/todos"
-          component={TodosPage}
           layout={DashboardLayout}
         />
 
